@@ -27,12 +27,77 @@ const createProduct = async (
   return result.rows[0];
 };
 
-const getAllProducts = async () => {
-  const result = await pool.query(
-    "SELECT * FROM products ORDER BY id"
-  );
+const getAllProducts = async ({
+  page = 1,
+  limit = 10,
+  search = "",
+  category,
+  sort = "id",
+}) => {
+
+  const offset = (page - 1) * limit;
+
+  let query = `
+    SELECT *
+    FROM products
+    WHERE 1=1
+  `;
+
+  const values = [];
+  let count = 1;
+
+  if (search) {
+    query += ` AND name ILIKE $${count}`;
+    values.push(`%${search}%`);
+    count++;
+  }
+
+  if (category) {
+    query += ` AND category_id = $${count}`;
+    values.push(category);
+    count++;
+  }
+
+  const allowedSort = [
+    "id",
+    "name",
+    "price",
+    "created_at",
+  ];
+
+  let sortField = "id";
+  let sortOrder = "ASC";
+
+  if (sort) {
+
+    if (sort.startsWith("-")) {
+      sortField = sort.substring(1);
+      sortOrder = "DESC";
+    } else {
+      sortField = sort;
+    }
+
+    if (!allowedSort.includes(sortField)) {
+      sortField = "id";
+    }
+  }
+
+  query += `
+    ORDER BY ${sortField} ${sortOrder}
+    LIMIT $${count}
+    OFFSET $${count + 1}
+  `;
+
+  values.push(limit);
+  values.push(offset);
+
+  const result = await pool.query(query, values);
 
   return result.rows;
+};
+
+module.exports = {
+  getAllProducts,
 };
 
 const getProductById = async (id) => {

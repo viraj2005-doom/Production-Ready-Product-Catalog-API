@@ -13,16 +13,34 @@ const createProduct = async (req, res) => {
   }
 };
 
-const getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res, next) => {
   try {
-    const products =
-      await productService.getAllProducts();
 
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
+    const {
+      page,
+      limit,
+      search,
+      category,
+      sort,
+    } = req.query;
+
+    const products =
+      await productService.getAllProducts({
+        page: Number(page) || 1,
+        limit: Number(limit) || 10,
+        search,
+        category,
+        sort,
+      });
+
+    res.status(200).json({
+      success: true,
+      count: products.length,
+      data: products,
     });
+
+  } catch (error) {
+    next(error);
   }
 };
 

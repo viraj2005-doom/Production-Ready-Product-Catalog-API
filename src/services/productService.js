@@ -10,8 +10,8 @@ const createProduct = async (data) => {
   );
 };
 
-const getAllProducts = async () => {
-  return await productRepository.getAllProducts();
+const getAllProducts = async (queryParams) => {
+  return await productRepository.getAllProducts(queryParams);   
 };
 
 const getProductById = async (id) => {
