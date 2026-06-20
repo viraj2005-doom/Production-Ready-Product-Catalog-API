@@ -4,7 +4,6 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 require("dotenv").config();
 
-const testDatabaseConnection = require("./config/dbTest");
 const healthRoutes = require("./routes/health.routes");
 const authRoutes = require("./routes/auth.routes.js");
 const userRoutes = require("./routes/user.routes.js");
@@ -25,15 +24,5 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
-
-
-testDatabaseConnection();
-
-app.get("/health", (req, res) => {
-  res.json({
-    status: "healthy",
-    service: "product-catalog-api",
-  });
-});
 
 module.exports = app;

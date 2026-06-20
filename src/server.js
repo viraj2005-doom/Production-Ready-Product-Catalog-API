@@ -1,8 +1,29 @@
 const app = require("./app");
-const config = require("./config");
+const { port } = require("./config");
+const redisClient = require("./config/redis");
+const testDatabaseConnection = require("./config/dbTest");
 
-app.listen(config.port, () => {
-  console.log(
-    `${config.appName} running on port ${config.port}`
-  );
-});
+const startServer = async () => {
+  try {
+    await testDatabaseConnection();
+
+    try {
+      await redisClient.connect();
+    } catch (error) {
+      console.warn(
+        "Redis connection skipped:",
+        error.code || error.message || "connection failed"
+      );
+    }
+
+    app.listen(port, () => {
+      console.log(`Server running on ${port}`);
+    });
+
+  }
+  catch (error) {
+    console.error(error);
+  }
+};
+
+startServer();

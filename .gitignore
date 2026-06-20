@@ -69,3 +69,5 @@ Thumbs.db
 *.pid
 *.seed
 *.lock
+
+redis-caching-request-data-flow.md
