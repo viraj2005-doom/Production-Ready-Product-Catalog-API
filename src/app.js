@@ -10,6 +10,7 @@ const userRoutes = require("./routes/user.routes.js");
 const errorHandler = require("./middlewares/errorMiddleware");
 const productRoutes = require("./routes/product.routes.js");
 const categoryRoutes = require("./routes/category.routes.js");
+const rateLimiter = require("./middlewares/rateLimiter");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(errorHandler);
+app.use(rateLimiter);
 
 app.use("/health", healthRoutes);
 app.use("/auth", authRoutes);

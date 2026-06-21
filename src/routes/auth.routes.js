@@ -10,6 +10,9 @@ const authController =
 const authenticate =
   require("../middlewares/authMiddleware");
 
+const authRateLimiter =
+  require("../middlewares/authrateLimiter");
+
 router.post(
   "/register",
   authController.register
@@ -17,6 +20,7 @@ router.post(
 
 router.post(
   "/login",
+  authRateLimiter,
   authController.login
 );
 

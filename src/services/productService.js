@@ -92,7 +92,7 @@ const updateProduct = async (id, data) => {
     throw new Error("Product not found");
   }
 
-  await deleteCache(`product:${id}`);
+  await deleteCache(`product:${id}`); // data invalidation ne prevent karva mate jethi stale data redis ma na rahe 
 
   const keys =
     await require("../config/redis")

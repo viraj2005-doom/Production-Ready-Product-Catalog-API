@@ -23,7 +23,8 @@
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.11.0",
     "pg": "^8.22.0",
-    "redis": "^6.0.0"
+    "redis": "^6.0.0",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.10",
