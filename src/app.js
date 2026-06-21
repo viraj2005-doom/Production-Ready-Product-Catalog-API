@@ -12,6 +12,8 @@ const productRoutes = require("./routes/product.routes.js");
 const categoryRoutes = require("./routes/category.routes.js");
 const rateLimiter = require("./middlewares/rateLimiter");
 const requestLogger = require("./middlewares/requestLogger");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./config/swagger");
 
 
 const app = express();
@@ -23,6 +25,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(errorHandler);
 app.use(rateLimiter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/health", healthRoutes);
 app.use("/auth", authRoutes);
