@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const userRepository = require("../repositories/userRepository");
+const AppError = require("../utils/appError");
 
 const {
     generateAccessToken,
@@ -13,10 +14,24 @@ const register = async ({
     password,
 }) => {
 
+    if (!name || !email || !password) {
+        throw new AppError("Name, email, and password are required", 400);
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+        throw new AppError("Valid email is required", 400);
+    }
+
+    if (password.length < 6) {
+        throw new AppError("Password must be at least 6 characters", 400);
+    }
+
     const existingUser = await userRepository.findByEmail(email);
 
     if (existingUser) {
-        throw new Error("Email already exists");
+        throw new AppError("Email already exists", 409);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,10 +48,14 @@ const login = async ({
     password,
 }) => {
 
+    if (!email || !password) {
+        throw new AppError("Email and password are required", 400);
+    }
+
     const user = await userRepository.findByEmail(email);
 
     if (!user) {
-        throw new Error("Invalid credentials");
+        throw new AppError("Invalid credentials", 401);
     }
 
     const isMatch = await bcrypt.compare(
@@ -45,7 +64,7 @@ const login = async ({
     );
 
     if (!isMatch) {
-        throw new Error("Invalid credentials");
+        throw new AppError("Invalid credentials", 401);
     }
 
     const accessToken =

@@ -7,7 +7,10 @@
     "dev": "nodemon src/server.js",
     "lint": "eslint .",
     "migrate": "node src/scripts/runMigrations.js",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "jest --config jest.config.js --runInBand",
+    "test:coverage": "jest --config jest.config.js --coverage --runInBand",
+    "test:watch": "jest --config jest.config.js --watch"
   },
   "keywords": [],
   "author": "",
@@ -30,10 +33,13 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.10",
+    "crossenv": "^0.0.2-security",
     "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
+    "jest": "^30.4.2",
     "nodemon": "^3.1.14",
-    "prettier": "^3.8.4"
+    "prettier": "^3.8.4",
+    "supertest": "^7.2.2"
   }
 }

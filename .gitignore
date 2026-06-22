@@ -51,7 +51,7 @@ target/
 *.log
 *.sqlite
 *.db
-
+coverage
 # Environment variables #
 #######################
 .env
