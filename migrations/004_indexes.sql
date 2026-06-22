@@ -1,8 +1,8 @@
-CREATE INDEX idx_users_email
+CREATE INDEX IF NOT EXISTS idx_users_email
 ON users(email);
 
-CREATE INDEX idx_products_name
+CREATE INDEX IF NOT EXISTS idx_products_name
 ON products(name);
 
-CREATE INDEX idx_products_category
+CREATE INDEX IF NOT EXISTS idx_products_category
 ON products(category_id);
