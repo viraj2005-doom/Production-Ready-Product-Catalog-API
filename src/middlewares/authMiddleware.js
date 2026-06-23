@@ -1,8 +1,6 @@
 // src/middlewares/authMiddleware.js
 
-const {
-  verifyAccessToken,
-} = require("../utils/tokenUtils");
+const { verifyAccessToken } = require("../utils/tokenUtils");
 
 const authenticate = (req, res, next) => {
   try {
@@ -27,9 +25,7 @@ const authenticate = (req, res, next) => {
     req.user = decoded;
 
     next();
-
-  } 
-  catch (error) {
+  } catch {
     return res.status(401).json({
       message: "Invalid or expired token",
     });

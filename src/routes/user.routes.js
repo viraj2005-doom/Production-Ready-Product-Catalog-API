@@ -4,11 +4,9 @@ const express = require("express");
 
 const router = express.Router();
 
-const authenticate =
-  require("../middlewares/authMiddleware");
+const authenticate = require("../middlewares/authMiddleware");
 
-const userController =
-  require("../controllers/userController");
+const userController = require("../controllers/userController");
 
 /**
  * @swagger
@@ -25,10 +23,6 @@ const userController =
  *       401:
  *         description: Unauthorized
  */
-router.get(
-  "/profile",
-  authenticate,
-  userController.getProfile
-);
+router.get("/profile", authenticate, userController.getProfile);
 
 module.exports = router;

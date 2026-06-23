@@ -38,7 +38,7 @@ router.post(
   authenticate,
   authorizeRole("Admin"),
   validateCategory,
-  categoryController.createCategory
+  categoryController.createCategory,
 );
 
 /**
@@ -123,7 +123,7 @@ router.put(
   authenticate,
   authorizeRole("Admin"),
   validateCategory,
-  categoryController.updateCategory
+  categoryController.updateCategory,
 );
 
 /**
@@ -159,7 +159,7 @@ router.delete(
   "/:id",
   authenticate,
   authorizeRole("Admin"),
-  categoryController.deleteCategory
+  categoryController.deleteCategory,
 );
 
 module.exports = router;

@@ -2,17 +2,13 @@ const express = require("express");
 
 const router = express.Router();
 
-const authenticate =
-  require("../middlewares/authMiddleware");
+const authenticate = require("../middlewares/authMiddleware");
 
-const authorizeRole =
-  require("../middlewares/roleMiddleware");
+const authorizeRole = require("../middlewares/roleMiddleware");
 
-const validateProduct =
-  require("../middlewares/productMiddleware");
+const validateProduct = require("../middlewares/productMiddleware");
 
-const productController =
-  require("../controllers/productController");
+const productController = require("../controllers/productController");
 
 /**
  * @swagger
@@ -46,7 +42,7 @@ router.post(
   authenticate,
   authorizeRole("Admin"),
   validateProduct,
-  productController.createProduct
+  productController.createProduct,
 );
 
 /**
@@ -100,10 +96,7 @@ router.post(
  *                   stock_quantity: 10
  *                   category_id: 1
  */
-router.get(
-  "/",
-  productController.getAllProducts
-);
+router.get("/", productController.getAllProducts);
 
 /**
  * @swagger
@@ -124,10 +117,7 @@ router.get(
  *       404:
  *         description: Product not found
  */
-router.get(
-  "/:id",
-  productController.getProductById
-);
+router.get("/:id", productController.getProductById);
 
 /**
  * @swagger
@@ -171,7 +161,7 @@ router.put(
   authenticate,
   authorizeRole("Admin"),
   validateProduct,
-  productController.updateProduct
+  productController.updateProduct,
 );
 
 /**
@@ -203,7 +193,7 @@ router.delete(
   "/:id",
   authenticate,
   authorizeRole("Admin"),
-  productController.deleteProduct
+  productController.deleteProduct,
 );
 
 module.exports = router;

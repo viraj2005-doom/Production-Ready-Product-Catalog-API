@@ -4,8 +4,5 @@ module.exports = {
   testMatch: ["<rootDir>/src/tests/**/*.js"],
   coverageDirectory: "coverage",
   collectCoverage: true,
-  collectCoverageFrom: [
-    "src/**/*.js",
-    "!src/tests/**"
-  ]
+  collectCoverageFrom: ["src/**/*.js", "!src/tests/**"],
 };

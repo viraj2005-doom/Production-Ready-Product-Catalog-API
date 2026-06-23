@@ -27,7 +27,7 @@ describe("Authentication and authorization middleware", () => {
         role: "user",
       },
       process.env.JWT_ACCESS_SECRET,
-      { expiresIn: "-1s" }
+      { expiresIn: "-1s" },
     );
 
     const response = await request(app)

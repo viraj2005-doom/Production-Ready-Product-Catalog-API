@@ -2,38 +2,29 @@ const productRepository = require("../repositories/productRepository");
 const { getCache, setCache, deleteCache } = require("../config/cache");
 
 const createProduct = async (data) => {
+  const product = await productRepository.createProduct(
+    data.name,
+    data.description,
+    data.price,
+    data.stock_quantity,
+    data.category_id,
+  );
 
-  const product =
-    await productRepository.createProduct(
-      data.name,
-      data.description,
-      data.price,
-      data.stock_quantity,
-      data.category_id
-    );
-
-  const keys =
-    await require("../config/redis")
-      .keys("products:*");
+  const keys = await require("../config/redis").keys("products:*");
 
   if (keys.length > 0) {
-    await require("../config/redis")
-      .del(keys);
+    await require("../config/redis").del(keys);
   }
 
   return product;
 };
 
 const getAllProducts = async (queryParams) => {
+  const cacheKey = `products:${JSON.stringify(queryParams)}`;
 
-  const cacheKey =
-    `products:${JSON.stringify(queryParams)}`;
-
-  const cachedProducts =
-    await getCache(cacheKey);
+  const cachedProducts = await getCache(cacheKey);
 
   if (cachedProducts) {
-
     console.log("CACHE HIT:", cacheKey);
 
     return cachedProducts;
@@ -41,21 +32,14 @@ const getAllProducts = async (queryParams) => {
 
   console.log("CACHE MISS:", cacheKey);
 
-  const products =
-    await productRepository.getAllProducts(
-      queryParams
-    );
+  const products = await productRepository.getAllProducts(queryParams);
 
-  await setCache(
-    cacheKey,
-    products
-  );
+  await setCache(cacheKey, products);
 
   return products;
 };
 
 const getProductById = async (id) => {
-
   const cacheKey = `product:${id}`;
 
   const cachedProduct = await getCache(cacheKey);
@@ -85,22 +69,19 @@ const updateProduct = async (id, data) => {
     data.description,
     data.price,
     data.stock_quantity,
-    data.category_id
+    data.category_id,
   );
 
   if (!product) {
     throw new Error("Product not found");
   }
 
-  await deleteCache(`product:${id}`); // data invalidation ne prevent karva mate jethi stale data redis ma na rahe 
+  await deleteCache(`product:${id}`); // data invalidation ne prevent karva mate jethi stale data redis ma na rahe
 
-  const keys =
-    await require("../config/redis")
-      .keys("products:*");
+  const keys = await require("../config/redis").keys("products:*");
 
   if (keys.length > 0) {
-    await require("../config/redis")
-      .del(keys);
+    await require("../config/redis").del(keys);
   }
 
   return product;
@@ -115,13 +96,10 @@ const deleteProduct = async (id) => {
 
   await deleteCache(`product:${id}`);
 
-  const keys =
-    await require("../config/redis")
-      .keys("products:*");
+  const keys = await require("../config/redis").keys("products:*");
 
   if (keys.length > 0) {
-    await require("../config/redis")
-      .del(keys);
+    await require("../config/redis").del(keys);
   }
 
   return product;

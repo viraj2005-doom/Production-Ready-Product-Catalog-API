@@ -154,7 +154,7 @@ const createTestUser = async ({
       VALUES ($1, $2, $3, $4)
       RETURNING id, name, email, role, created_at;
     `,
-    [name, email, hashedPassword, role]
+    [name, email, hashedPassword, role],
   );
 
   const user = result.rows[0];
@@ -169,7 +169,7 @@ const createTestUser = async ({
 const createTestCategory = async (name = "Electronics") => {
   const result = await pool.query(
     "INSERT INTO categories (name) VALUES ($1) RETURNING *;",
-    [name]
+    [name],
   );
 
   return result.rows[0];
@@ -192,7 +192,7 @@ const createTestProduct = async ({
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *;
     `,
-    [name, description, price, stock_quantity, categoryId]
+    [name, description, price, stock_quantity, categoryId],
   );
 
   return result.rows[0];

@@ -5,12 +5,9 @@ const testDatabaseConnection = async () => {
     const result = await pool.query("SELECT NOW()");
 
     console.log("Database Connected:", result.rows[0]);
-  } 
-  catch (error) {
-    console.error("Database Connection Failed",error);
+  } catch (error) {
+    console.error("Database Connection Failed", error);
   }
 };
-
-
 
 module.exports = testDatabaseConnection;

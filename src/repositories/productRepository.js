@@ -5,7 +5,7 @@ const createProduct = async (
   description,
   price,
   stock_quantity,
-  category_id
+  category_id,
 ) => {
   const query = `
     INSERT INTO products
@@ -14,13 +14,7 @@ const createProduct = async (
     RETURNING *;
   `;
 
-  const values = [
-    name,
-    description,
-    price,
-    stock_quantity,
-    category_id,
-  ];
+  const values = [name, description, price, stock_quantity, category_id];
 
   const result = await pool.query(query, values);
 
@@ -34,7 +28,6 @@ const getAllProducts = async ({
   category,
   sort = "id",
 }) => {
-
   const offset = (page - 1) * limit;
 
   let query = `
@@ -58,18 +51,12 @@ const getAllProducts = async ({
     count++;
   }
 
-  const allowedSort = [
-    "id",
-    "name",
-    "price",
-    "created_at",
-  ];
+  const allowedSort = ["id", "name", "price", "created_at"];
 
   let sortField = "id";
   let sortOrder = "ASC";
 
   if (sort) {
-
     if (sort.startsWith("-")) {
       sortField = sort.substring(1);
       sortOrder = "DESC";
@@ -101,10 +88,7 @@ module.exports = {
 };
 
 const getProductById = async (id) => {
-  const result = await pool.query(
-    "SELECT * FROM products WHERE id=$1",
-    [id]
-  );
+  const result = await pool.query("SELECT * FROM products WHERE id=$1", [id]);
 
   return result.rows[0];
 };
@@ -115,7 +99,7 @@ const updateProduct = async (
   description,
   price,
   stock_quantity,
-  category_id
+  category_id,
 ) => {
   const query = `
   UPDATE products
@@ -129,14 +113,7 @@ const updateProduct = async (
   RETURNING *;
   `;
 
-  const values = [
-    name,
-    description,
-    price,
-    stock_quantity,
-    category_id,
-    id,
-  ];
+  const values = [name, description, price, stock_quantity, category_id, id];
 
   const result = await pool.query(query, values);
 
@@ -146,7 +123,7 @@ const updateProduct = async (
 const deleteProduct = async (id) => {
   const result = await pool.query(
     "DELETE FROM products WHERE id=$1 RETURNING *",
-    [id]
+    [id],
   );
 
   return result.rows[0];

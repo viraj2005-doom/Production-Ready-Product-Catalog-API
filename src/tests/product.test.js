@@ -151,7 +151,7 @@ describe("Product routes", () => {
         expect.objectContaining({ msg: "Product name is required" }),
         expect.objectContaining({ msg: "Price must be positive" }),
         expect.objectContaining({ msg: "Stock quantity must be positive" }),
-      ])
+      ]),
     );
   });
 

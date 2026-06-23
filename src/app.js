@@ -15,7 +15,6 @@ const requestLogger = require("./middlewares/requestLogger");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./config/swagger");
 
-
 const app = express();
 
 app.use(helmet());

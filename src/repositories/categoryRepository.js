@@ -29,7 +29,7 @@ const getCategoryById = async (id) => {
       FROM categories
       WHERE id = $1
     `,
-    [id]
+    [id],
   );
 
   return result.rows[0];
@@ -43,7 +43,7 @@ const updateCategory = async (id, name) => {
       WHERE id = $2
       RETURNING *;
     `,
-    [name, id]
+    [name, id],
   );
 
   return result.rows[0];
@@ -56,7 +56,7 @@ const deleteCategory = async (id) => {
       WHERE id = $1
       RETURNING *;
     `,
-    [id]
+    [id],
   );
 
   return result.rows[0];

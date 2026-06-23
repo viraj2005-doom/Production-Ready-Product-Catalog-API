@@ -30,8 +30,7 @@ const refreshToken = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
 
-    const token =
-      await authService.refresh(refreshToken);
+    const token = await authService.refresh(refreshToken);
 
     res.status(200).json(token);
   } catch (error) {
@@ -43,9 +42,7 @@ const logout = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
-    await userRepository.removeRefreshToken(
-      userId
-    );
+    await userRepository.removeRefreshToken(userId);
 
     res.status(200).json({
       message: "Logged out successfully",

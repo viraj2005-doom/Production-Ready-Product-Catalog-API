@@ -46,7 +46,9 @@ describe("Authentication routes", () => {
       });
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toBe("Name, email, and password are required");
+      expect(response.body.message).toBe(
+        "Name, email, and password are required",
+      );
     });
   });
 

@@ -13,17 +13,11 @@ const getCache = async (key) => {
   }
 };
 
-const setCache = async (
-  key,
-  value,
-  ttl = CACHE_TTL
-) => {
+const setCache = async (key, value, ttl = CACHE_TTL) => {
   try {
-    await redisClient.set(key,JSON.stringify(value),
-      {
-        EX: ttl,
-      }
-    );
+    await redisClient.set(key, JSON.stringify(value), {
+      EX: ttl,
+    });
   } catch (error) {
     console.error("Cache Write Error:", error.message);
   }

@@ -4,14 +4,11 @@ const express = require("express");
 
 const router = express.Router();
 
-const authController =
-  require("../controllers/authController");
+const authController = require("../controllers/authController");
 
-const authenticate =
-  require("../middlewares/authMiddleware");
+const authenticate = require("../middlewares/authMiddleware");
 
-const authRateLimiter =
-  require("../middlewares/authrateLimiter");
+const authRateLimiter = require("../middlewares/authrateLimiter");
 
 /**
  * @swagger
@@ -36,10 +33,7 @@ const authRateLimiter =
  *       409:
  *         description: Email already exists
  */
-router.post(
-  "/register",
-  authController.register
-);
+router.post("/register", authController.register);
 
 /**
  * @swagger
@@ -61,11 +55,7 @@ router.post(
  *       401:
  *         description: Invalid credentials
  */
-router.post(
-  "/login",
-  authRateLimiter,
-  authController.login
-);
+router.post("/login", authRateLimiter, authController.login);
 
 /**
  * @swagger
@@ -88,10 +78,7 @@ router.post(
  *       401:
  *         description: Invalid or expired refresh token
  */
-router.post(
-  "/refresh",
-  authController.refreshToken
-);
+router.post("/refresh", authController.refreshToken);
 
 /**
  * @swagger
@@ -112,10 +99,6 @@ router.post(
  *       401:
  *         description: Unauthorized
  */
-router.post(
-  "/logout",
-  authenticate,
-  authController.logout
-);
+router.post("/logout", authenticate, authController.logout);
 
 module.exports = router;

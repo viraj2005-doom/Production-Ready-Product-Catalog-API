@@ -7,8 +7,7 @@ const options = {
     info: {
       title: "Product Catalog API",
       version: "1.0.0",
-      description:
-        "Production-ready Backend Product Catalog API",
+      description: "Production-ready Backend Product Catalog API",
     },
 
     servers: [

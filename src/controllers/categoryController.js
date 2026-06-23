@@ -40,7 +40,7 @@ const updateCategory = async (req, res, next) => {
   try {
     const category = await categoryService.updateCategory(
       req.params.id,
-      req.body.name
+      req.body.name,
     );
 
     if (!category) {
