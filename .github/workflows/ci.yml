@@ -53,7 +53,7 @@ jobs:
       DB_HOST: localhost
       DB_PORT: 5432
       DB_USER: catalog_user
-      DB_PASSWORD: StrongPassword123
+      DB_PASSWORD: root
       DB_NAME: product_catalog_test
 
       REDIS_HOST: localhost
