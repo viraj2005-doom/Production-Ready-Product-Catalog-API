@@ -78,6 +78,13 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: Debug DB Config
+        run: |
+            echo "DB_HOST=$DB_HOST"
+            echo "DB_PORT=$DB_PORT"
+            echo "DB_USER=$DB_USER"
+            echo "DB_NAME=$DB_NAME"
+
       - name: Run Database Migrations
         run: npm run migrate
 
