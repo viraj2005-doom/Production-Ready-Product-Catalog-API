@@ -5,41 +5,33 @@ on:
     branches:
       - master
       - develop
-
   pull_request:
     branches:
       - master
 
 jobs:
   build-and-test:
-
     runs-on: ubuntu-latest
 
     services:
-
       postgres:
         image: postgres:18.4
-
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: product_catalog_test
-
         ports:
           - 5432:5432
-
         options: >-
-          --health-cmd="pg_isready -U postgres"
+          --health-cmd="pg_isready -U postgres -d product_catalog_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
 
       redis:
         image: redis:latest
-
         ports:
           - 6379:6379
-
         options: >-
           --health-cmd="redis-cli ping"
           --health-interval=10s
@@ -49,6 +41,7 @@ jobs:
     env:
       NODE_ENV: test
       PORT: 5000
+      APP_NAME: product-catalog-api
 
       DB_HOST: localhost
       DB_PORT: 5432
@@ -59,10 +52,12 @@ jobs:
       REDIS_HOST: localhost
       REDIS_PORT: 6379
 
-      JWT_SECRET: ${ secrets.JWT_SECRET }
+      JWT_ACCESS_SECRET: test_access_secret_do_not_use_in_production
+      JWT_REFRESH_SECRET: test_refresh_secret_do_not_use_in_production
+      ACCESS_TOKEN_EXPIRES: 15m
+      REFRESH_TOKEN_EXPIRES: 7d
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -77,13 +72,6 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
-
-      - name: Debug DB Config
-        run: |
-            echo "DB_HOST=$DB_HOST"
-            echo "DB_PORT=$DB_PORT"
-            echo "DB_USER=$DB_USER"
-            echo "DB_NAME=$DB_NAME"
 
       - name: Run Database Migrations
         run: npm run migrate
