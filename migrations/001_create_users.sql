@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
     role VARCHAR(20)
     DEFAULT 'user',
 
+    refresh_token TEXT,
+
     created_at TIMESTAMP
     DEFAULT CURRENT_TIMESTAMP
 );
