@@ -486,14 +486,10 @@ Pull Request
 ## Future Improvements
 
 * Kubernetes Deployment
-* AWS ECS Fargate Deployment
-* AWS ElastiCache Integration
-* AWS RDS PostgreSQL
 * Prometheus Monitoring
 * Grafana Dashboards
 * Distributed Tracing
-* GitHub Actions CD Pipeline
-
+  
 ---
 
 ## Author
